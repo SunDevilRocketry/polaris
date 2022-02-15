@@ -10,14 +10,31 @@
 #include <fstream>
 #include <string>
 #include <vector>
+#include <algorithm>
 
 using namespace std;
 
 // checkVertices -- look for repeat vertices in vertex vector
 //                  input is a vertex, and output is the index
 //                  of the vertex in the vertex vector. Output is
-//                  -1 if the vertex is not in the vector
-int checkVertices(){
+//                  appended to the vertex vecotr if the vertex is not
+//                  int the vector, and the output is to the index of the 
+//                  newly appended vertex
+// Inputs: 
+//          vertices: vector vertex vectors
+//          newVertex: vertex vector to look for in existing vertex list
+//          numVertices: the current number of vertices in the list
+//
+// Output: index of newVertex in the vertex array
+int checkVertices(vector<vector<float>> &vertices, vector<float> newVertex, int numVertices){
+    // Output index as iterator type
+    auto targetIndex_it = find(vertices.begin(), vertices.end(), newVertex);
+    // cast to integer
+    int targetIndex = distance(vertices.begin(), targetIndex_it);
+    if (targetIndex == numVertices){
+        vertices.push_back(newVertex);
+    }
+    return targetIndex;
 
 }
 
