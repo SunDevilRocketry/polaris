@@ -11,26 +11,34 @@
 #include <string>
 #include <vector>
 #include <algorithm>
+#include <iostream>
 
 using namespace std;
+
+// stl_read header file
+#include "stl_read.h"
 
 // checkVertices -- look for repeat vertices in vertex vector
 //                  input is a vertex, and output is the index
 //                  of the vertex in the vertex vector. Output is
-//                  appended to the vertex vecotr if the vertex is not
+//                  appended to the vertex vector if the vertex is not
 //                  int the vector, and the output is to the index of the 
 //                  newly appended vertex
 // Inputs: 
 //          vertices: vector vertex vectors
 //          newVertex: vertex vector to look for in existing vertex list
-//          numVertices: the current number of vertices in the list
 //
 // Output: index of newVertex in the vertex array
-int checkVertices(vector<vector<float>> &vertices, vector<float> newVertex, int numVertices){
+int checkVertices(vector<vector<float>> &vertices, vector<float> newVertex){
     // Output index as iterator type
     auto targetIndex_it = find(vertices.begin(), vertices.end(), newVertex);
     // cast to integer
     int targetIndex = distance(vertices.begin(), targetIndex_it);
+
+    // Determine vertex array length
+    int numVertices = distance(vertices.begin(), vertices.end());
+
+    // Append new vertices
     if (targetIndex == numVertices){
         vertices.push_back(newVertex);
     }
@@ -40,41 +48,105 @@ int checkVertices(vector<vector<float>> &vertices, vector<float> newVertex, int 
 
 // glVehicleData -- class to hold vertex data used to render 
 //                using openGL
-class glVehicleData {
-    public:
-	// Constructor
-	glVehicleData(string stl_file){
-	     // stl file source
-             string source_stl_file = stl_file;
 
-             // Vertex and index arrays
-	     vector<float> vertices_vec;
-	     vector<unsigned int> indices_vec;
+// Constructor
+glVehicleData::glVehicleData(string filename){
 
-	     // Number of primitives and vertices 
-	     unsigned int num_Primitives, num_vertices; 
+    // Set filename
+    stl_file = filename; 
+
+    // set number of vertices to zero
+    num_vertices = 0; 
+
+}
+
+// Method to generate vertex and 
+// index arrays
+void glVehicleData::genBaseVertexData(void){
+    // Open stl file
+    ifstream stl_sourceFile(stl_file);
+
+    // Loop over stl file lines 
+    string lineBuffer; // buffer to temporarily store file data
+    vector<float> vertexBuffer; // buffer to temporarily store vertices 
+    int existingIndex;
+    while(getline(stl_sourceFile, lineBuffer)){
+        // Look for "vertex"
+	size_t vertexInd = lineBuffer.find("vertex");
+	int vertexStringIndex = static_cast<int>(vertexInd);
+	if (vertexStringIndex >=0){ // line contains a vertex
+	    // load vertex into buffer
+	    vertexBuffer.push_back(stof(lineBuffer.substr(16,12)));
+	    vertexBuffer.push_back(stof(lineBuffer.substr(29,12)));
+	    vertexBuffer.push_back(stof(lineBuffer.substr(42,12)));
+
+            // compare vertex with previous vertices
+ 	    existingIndex = checkVertices(vertices, vertexBuffer); 
+            indices.push_back(existingIndex);
+		   
+            // update vertices if needed, add new index vector
+            if(existingIndex == num_vertices){
+                // last vertex was new, update vertex count 
+		num_vertices++;
+	    } 
+        }
+	// Clear Buffers 
+	vertexBuffer.clear();
+	lineBuffer.clear();
+
+	// determine number of primitives
+        num_indices = distance(indices.begin(), indices.end()); 	
+	num_primitives = num_indices/3;
+    }
+	   
+    // Close source file 
+    stl_sourceFile.close();	    
+
+}
+
+void glVehicleData::ExportVertexData(float* verticesArrayPtr, int* indicesArrayPtr){
+    
+    // Export vertices
+    for (int i = 0; i < num_vertices; ++i){
+        for (int j = 0; j < 3; ++j){
+	    *(verticesArrayPtr + 3*i + j) = vertices[i][j];
 	}
+    }
 
+    // Export indices
+    for (int i = 0; i < num_indices; ++ i){
+        *(indicesArrayPtr + i) = indices[i];
+    }
+}
 
-	// Method to generate vertex and 
-	// index arrays
-	void genBaseVertexData(void){
-	    // Open stl file
+void glVehicleData::printVertexData(void){
 
-            // Loop over stl file words
+    // Check to see if data has been extracted from stl file
+    if (num_vertices == 0){
+        cout << "Error printing vertex data: no vertex data has been generated. Check that the stl file has been read." << endl;
+	return ;
+    }
 
-		// look for "facet" >> primitive indicator
-		// look for "vertex" >> vertex indicator  
-		// load vertex into buffer
-		// compare vertex with previous vertices
-		// update vertices if needed, add new index vector
-		// record number of primitives, vertices, and indices
-        	
-	}
+    // loop over vertices in vector 
+    for (int i = 0; i < num_vertices; ++i){
+        cout << "Vertex " << i+1 << ": " << endl; 
+        cout << "x: " << vertices[i][0] << " y: " << vertices[i][1] << " z: " << vertices[i][2] << endl; 	
+    }
 
-	// Method to export data to base program in the 
-	// format of C arrays
-	voidExportVertexData(float* vertices, int vertices_len, int* indices, int indices_len){
+}
+
+void glVehicleData::printIndexData(void){
 	
-	}
+    // Check to see if data has been extracted from stl file
+    if (num_vertices == 0){
+        cout << "Error printing index data: no vertex data has been generated. Check that the stl file has been read." << endl;
+	return ;
+    }
+
+    // loop over indices in vector 
+    for (int i = 0; i < num_primitives; ++i){
+        cout << "Primitive " << i+1 << ": " << endl; 
+        cout << indices[3*i] << ", " << indices[3*i+1] << ", " << indices[3*i+2] << endl; 	
+    }
+
 }

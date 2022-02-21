@@ -3,8 +3,13 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <algorithm>
+#include <vector>
 
 using namespace std;
+
+// stl file read classes/functions
+#include "stl_read.h"
 
 /****************************CALLBACK FUNCTIONS***************************/
 
