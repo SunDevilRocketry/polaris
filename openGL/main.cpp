@@ -118,18 +118,18 @@ int main(void){
     glDeleteShader(vertexShader);
     glDeleteShader(fragmentShader);
 
+    // Read base vertex data from stl file
+    glVehicleData rocket("CAD/rocket.stl");
+    rocket.genBaseVertexData();
+    rocket.centerVertexData();
+    rocket.normalizeVertexData(0.8);
+    int num_vertices = rocket.num_vertices;
+    int num_indices = rocket.num_indices;
+
     // Initial Draw Data
-    float vertices[] = {
-	0.5, 0.5, 0.0,
-	0.5, -0.5, 0.0,
-	-0.5, -0.5, 0,
-        -0.5, 0.5, 0,	
-    };
-    unsigned int num_vertices = 6;
-    unsigned int indices[] = {
-	0, 1, 3,
-	1, 2, 3
-    };
+    float vertices[num_vertices*3];
+    unsigned int indices[num_indices];
+    rocket.ExportVertexData(&vertices[0], &indices[0]);
 
     // Buffer Objects
     unsigned int VAO;
