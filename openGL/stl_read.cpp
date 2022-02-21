@@ -104,7 +104,7 @@ void glVehicleData::genBaseVertexData(void){
 
 }
 
-void glVehicleData::ExportVertexData(float* verticesArrayPtr, int* indicesArrayPtr){
+void glVehicleData::ExportVertexData(float* verticesArrayPtr, unsigned int* indicesArrayPtr){
     
     // Export vertices
     for (int i = 0; i < num_vertices; ++i){
@@ -148,5 +148,55 @@ void glVehicleData::printIndexData(void){
         cout << "Primitive " << i+1 << ": " << endl; 
         cout << indices[3*i] << ", " << indices[3*i+1] << ", " << indices[3*i+2] << endl; 	
     }
+
+}
+
+void glVehicleData::normalizeVertexData(float scale){
+
+    // Find the maximum vertex entry
+    float maxVal = 0.0;
+    for (int i = 0; i < num_vertices; ++i){
+        for (int j = 0; j < 3; ++j){
+	    if (vertices[i][j] > maxVal){
+	        maxVal = vertices[i][j];
+	    }
+	}
+    }
+
+    // Normailize all the vertex entries
+    for (int i = 0; i < num_vertices; ++i){
+        for (int j = 0; j < 3; ++j){
+	    vertices[i][j] /= maxVal;
+	    vertices[i][j] *= scale;
+	}
+    }
+    cout << "Max Value: " << maxVal <<  endl;
+}
+
+void glVehicleData::centerVertexData(void){
+
+    // Find the vertices' center of gravity
+    float cgx = 0.0;
+    float cgy = 0.0;
+    float cgz = 0.0;
+    for (int i = 0; i < num_indices; ++i){
+        cgx += vertices[indices[i]][0];
+	cgy += vertices[indices[i]][1];
+	cgz += vertices[indices[i]][2];
+    }
+    cgx /= num_indices;
+    cgy /= num_indices;
+    cgz /= num_indices;
+    
+    // Center the vertices around the cg
+    for (int i = 0; i < num_vertices; ++i){
+        vertices[i][0] -= cgx;
+	vertices[i][1] -= cgy;
+	vertices[i][2] -= cgz;
+    }
+
+    cout << "average x: " << cgx << endl;
+    cout << "average y: " << cgy << endl;
+    cout << "average z: " << cgz << endl;
 
 }

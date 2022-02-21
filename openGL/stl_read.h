@@ -46,12 +46,18 @@ class glVehicleData {
 
 	// Method to export data to base program in the 
 	// format of C arrays
-	void ExportVertexData(float* verticesArrayPtr, int* indicesArrayPtr);
+	void ExportVertexData(float* verticesArrayPtr, unsigned int* indicesArrayPtr);
 
 	// Method to print vertex data to the console
 	void printVertexData(void);
 
 	// Method to print the indices of each primitives vertices
 	void printIndexData(void);
+
+	// Method to normalize vertex data
+	void normalizeVertexData(float scale);
+
+	// Method to center vertex data on screen
+	void centerVertexData(void);
 };
 #endif
