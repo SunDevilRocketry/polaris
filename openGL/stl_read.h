@@ -18,7 +18,7 @@ using namespace std;
 //          newVertex: vertex vector to look for in existing vertex list
 //
 // Output: index of newVertex in the vertex array
-int checkVertices(vector<vector<float>> &vertices, vector<float> newVertex);
+int checkVertices(vector<vector<float> > &vertices, vector<float> newVertex);
 
 // glVehicleData -- class to hold vertex data used to render 
 //                using openGL
@@ -29,7 +29,7 @@ class glVehicleData {
         string stl_file;
 
         // Vertex and index arrays
-	vector<vector<float>> vertices;
+    vector<vector<float> > vertices;
 	vector<unsigned int> indices;
 
 	// Number of primitives and vertices 

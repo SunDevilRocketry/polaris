@@ -29,7 +29,7 @@ using namespace std;
 //          newVertex: vertex vector to look for in existing vertex list
 //
 // Output: index of newVertex in the vertex array
-int checkVertices(vector<vector<float>> &vertices, vector<float> newVertex){
+int checkVertices(vector<vector<float> > &vertices, vector<float> newVertex){
     // Output index as iterator type
     auto targetIndex_it = find(vertices.begin(), vertices.end(), newVertex);
     // cast to integer
