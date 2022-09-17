@@ -5,8 +5,10 @@
 import FlutterMacOS
 import Foundation
 
-import sfsymbols
+import desktop_multi_window
+import macos_ui
 
 func RegisterGeneratedPlugins(registry: FlutterPluginRegistry) {
-  SFSymbolsPlugin.register(with: registry.registrar(forPlugin: "SFSymbolsPlugin"))
+  FlutterMultiWindowPlugin.register(with: registry.registrar(forPlugin: "FlutterMultiWindowPlugin"))
+  MacOSUiPlugin.register(with: registry.registrar(forPlugin: "MacOSUiPlugin"))
 }
