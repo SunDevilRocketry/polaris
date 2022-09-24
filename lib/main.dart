@@ -11,18 +11,18 @@ import 'package:polaris/pages/systems/systems.dart';
 import 'package:polaris/pages/telemetry.dart';
 
 void main(List<String> args) {
-  if (args.firstOrNull == 'multi_window') {
-    final windowId = int.parse(args[1]);
-    final arguments = args[2].isEmpty
-        ? const {}
-        : jsonDecode(args[2]) as Map<String, dynamic>;
-    runApp(AboutWindow(
-      windowController: WindowController.fromWindowId(windowId),
-      args: arguments,
-    ));
-  } else {
-    runApp(const App());
-  }
+  // if (args.firstOrNull == 'multi_window') {
+  //   final windowId = int.parse(args[1]);
+  //   final arguments = args[2].isEmpty
+  //       ? const {}
+  //       : jsonDecode(args[2]) as Map<String, dynamic>;
+  //   runApp(AboutWindow(
+  //     windowController: WindowController.fromWindowId(windowId),
+  //     args: arguments,
+  //   ));
+  // } else {
+  runApp(const App());
+  // }
 }
 
 class App extends StatelessWidget {
@@ -102,72 +102,42 @@ class _MainViewState extends State<MainView> {
 
   @override
   Widget build(BuildContext context) {
-    return PlatformMenuBar(
-      menus: [
-        PlatformMenu(
-          label: 'Polaris',
-          menus: [
-            PlatformMenuItem(
-              label: 'About',
-              onSelected: () async {
-                final window = await DesktopMultiWindow.createWindow(jsonEncode(
-                  {
-                    'args1': 'About polaris',
-                    'args2': 500,
-                    'args3': true,
-                  },
-                ));
-                debugPrint('$window');
-                window
-                  ..setFrame(const Offset(0, 0) & const Size(350, 350))
-                  ..center()
-                  ..setTitle('About polaris')
-                  ..show();
-              },
+    return MacosWindow(
+      sidebar: Sidebar(
+        minWidth: 200,
+        builder: (context, scrollController) => SidebarItems(
+          currentIndex: _pageIndex,
+          onChanged: (index) {
+            setState(() => _pageIndex = index);
+          },
+          items: const [
+            SidebarItem(
+              leading: MacosIcon(CupertinoIcons.home),
+              label: Text('Dashboard'),
             ),
-            const PlatformProvidedMenuItem(
-              type: PlatformProvidedMenuItemType.quit,
+            SidebarItem(
+              leading: MacosIcon(CupertinoIcons.chart_bar_alt_fill),
+              label: Text('Systems'),
+            ),
+            SidebarItem(
+              leading: MacosIcon(CupertinoIcons.gauge),
+              label: Text('Telemetry'),
+            ),
+            SidebarItem(
+              leading: MacosIcon(CupertinoIcons.rocket_fill),
+              label: Text('Flights'),
             ),
           ],
         ),
-      ],
-      body: MacosWindow(
-        sidebar: Sidebar(
-          minWidth: 200,
-          builder: (context, scrollController) => SidebarItems(
-            currentIndex: _pageIndex,
-            onChanged: (index) {
-              setState(() => _pageIndex = index);
-            },
-            items: const [
-              SidebarItem(
-                leading: MacosIcon(CupertinoIcons.home),
-                label: Text('Dashboard'),
-              ),
-              SidebarItem(
-                leading: MacosIcon(CupertinoIcons.chart_bar_alt_fill),
-                label: Text('Systems'),
-              ),
-              SidebarItem(
-                leading: MacosIcon(CupertinoIcons.gauge),
-                label: Text('Telemetry'),
-              ),
-              SidebarItem(
-                leading: MacosIcon(CupertinoIcons.rocket_fill),
-                label: Text('Flights'),
-              ),
-            ],
-          ),
-        ),
-        child: IndexedStack(
-          index: _pageIndex,
-          children: const [
-            DashboardPage(),
-            SystemsPage(),
-            TelemetryPage(),
-            FlightsPage(),
-          ],
-        ),
+      ),
+      child: IndexedStack(
+        index: _pageIndex,
+        children: const [
+          DashboardPage(),
+          SystemsPage(),
+          TelemetryPage(),
+          FlightsPage(),
+        ],
       ),
     );
   }
