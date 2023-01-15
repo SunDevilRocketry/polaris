@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:macos_ui/macos_ui.dart';
 
-class FlightsPage extends StatelessWidget {
-  const FlightsPage({super.key});
+class AnalysisPage extends StatelessWidget {
+  const AnalysisPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -10,7 +10,7 @@ class FlightsPage extends StatelessWidget {
       builder: (context) {
         return MacosScaffold(
           toolBar: ToolBar(
-            title: const Text('Flights'),
+            title: const Text('Analysis'),
             actions: [
               ToolBarIconButton(
                 label: 'Toggle Sidebar',
@@ -27,7 +27,7 @@ class FlightsPage extends StatelessWidget {
             ContentArea(
               builder: (context, scrollController) {
                 return const Center(
-                  child: Text('Flights'),
+                  child: Text('Analysis'),
                 );
               },
             ),

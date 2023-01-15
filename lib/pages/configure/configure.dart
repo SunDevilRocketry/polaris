@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:macos_ui/macos_ui.dart';
 
-class TelemetryPage extends StatelessWidget {
-  const TelemetryPage({super.key});
+class ConfigurationPage extends StatelessWidget {
+  const ConfigurationPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -26,14 +26,43 @@ class TelemetryPage extends StatelessWidget {
           children: [
             ContentArea(
               builder: (context, scrollController) {
-                return const Center(
-                  child: Text('Telemetry'),
-                );
+                return const Center(child: Slider());
               },
             ),
           ],
         );
       },
+    );
+  }
+}
+
+class Slider extends StatefulWidget {
+  const Slider({Key? key}) : super(key: key);
+
+  @override
+  State<Slider> createState() => _SliderState();
+}
+
+class _SliderState extends State<Slider> {
+  double _value = 0.0;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Text(
+          _value.truncate().toString(),
+          style: CupertinoTheme.of(context).textTheme.textStyle.copyWith(
+                fontSize: 12,
+              ),
+        ),
+        CupertinoSlider(
+          value: _value,
+          divisions: 300,
+          onChanged: (newValue) => {setState(() => _value = newValue)},
+          max: 300,
+        )
+      ],
     );
   }
 }
