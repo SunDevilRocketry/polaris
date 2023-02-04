@@ -102,21 +102,13 @@ class TelemetryPage extends StatelessWidget {
                       color: Color.fromARGB(94, 158, 158, 158),
                       thickness: 1,
                     ),
-                    Row(
-                      children: const [
-                        Text("Main: "),
-                        MacosTextField(
-                          placeholder: "Main",
-                        ),
-                      ],
+                    const Text("Main: "),
+                    const MacosTextField(
+                      placeholder: "Main",
                     ),
-                    Row(
-                      children: const [
-                        Text("Drogue: "),
-                        MacosTextField(
-                          placeholder: "Drogue",
-                        ),
-                      ],
+                    const Text("Drogue: "),
+                    const MacosTextField(
+                      placeholder: "Drogue",
                     ),
                     const Spacer(),
                     const Divider(
