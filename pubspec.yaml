@@ -9,6 +9,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  syncfusion_flutter_charts: ^20.3.52
 
   cupertino_icons: ^1.0.5
   collection: ^1.16.0

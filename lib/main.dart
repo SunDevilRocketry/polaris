@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:collection/collection.dart';
 import 'package:desktop_multi_window/desktop_multi_window.dart';
 import 'package:flutter/cupertino.dart';
@@ -121,7 +120,7 @@ class _MainViewState extends State<MainView> {
             ),
             SidebarItem(
               leading: MacosIcon(CupertinoIcons.gauge),
-              label: Text('Telemetry'),
+              label: Text('Altimeter'),
             ),
             SidebarItem(
               leading: MacosIcon(CupertinoIcons.rocket_fill),
