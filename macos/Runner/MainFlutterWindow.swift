@@ -29,6 +29,7 @@ class BlurryContainerViewController: NSViewController {
     self.addChild(flutterViewController)
 
     flutterViewController.view.frame = self.view.bounds
+    flutterViewController.backgroundColor = .clear
     flutterViewController.view.autoresizingMask = [.width, .height]
     self.view.addSubview(flutterViewController.view)
   }
@@ -47,7 +48,6 @@ class MainFlutterWindow: NSWindow, NSWindowDelegate {
       customToolbar.showsBaselineSeparator = false
       self.toolbar = customToolbar
     }
-
     self.titleVisibility = .hidden
     self.titlebarAppearsTransparent = true
     if #available(macOS 11.0, *) {
@@ -67,7 +67,6 @@ class MainFlutterWindow: NSWindow, NSWindowDelegate {
   }
 
   func window(_ window: NSWindow, willUseFullScreenPresentationOptions proposedOptions: NSApplication.PresentationOptions = []) -> NSApplication.PresentationOptions {
-    // Hides the toolbar when in fullscreen mode
     return [.autoHideToolbar, .autoHideMenuBar, .fullScreen]
   }
 
@@ -79,4 +78,3 @@ class MainFlutterWindow: NSWindow, NSWindowDelegate {
       self.toolbar?.isVisible = true
   }
 }
-
