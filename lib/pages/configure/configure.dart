@@ -25,7 +25,7 @@ class ConfigurationPage extends StatelessWidget {
           ),
           children: [
             ContentArea(
-              builder: (context, scrollController) {
+              builder: (context) {
                 return const Center(child: Slider());
               },
             ),

@@ -25,7 +25,7 @@ class DashboardPage extends StatelessWidget {
           ),
           children: [
             ContentArea(
-              builder: (context, scrollController) {
+              builder: (context) {
                 return const Center(
                   child: Text('Dashboard'),
                 );
