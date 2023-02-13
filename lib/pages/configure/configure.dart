@@ -25,7 +25,7 @@ class ConfigurationPage extends StatelessWidget {
           ),
           children: [
             ContentArea(
-              builder: (context) {
+              builder: (context, scrollController) {
                 return const Center(child: Slider());
               },
             ),
@@ -56,9 +56,8 @@ class _SliderState extends State<Slider> {
                 fontSize: 12,
               ),
         ),
-        CupertinoSlider(
+        MacosSlider(
           value: _value,
-          divisions: 300,
           onChanged: (newValue) => {setState(() => _value = newValue)},
           max: 300,
         )

@@ -11,8 +11,8 @@ dependencies:
     sdk: flutter
 
   cupertino_icons: ^1.0.5
-  collection: ^1.16.0
-  macos_ui: ^1.7.6
+  collection: ^1.17.0
+  macos_ui: ^1.10.0
 
 dev_dependencies:
   flutter_test:

@@ -25,7 +25,7 @@ class AnalysisPage extends StatelessWidget {
           ),
           children: [
             ContentArea(
-              builder: (context) {
+              builder: (context, scrollController) {
                 return const Center(
                   child: Text('Analysis'),
                 );
