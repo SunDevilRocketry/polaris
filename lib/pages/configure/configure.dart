@@ -10,7 +10,7 @@ class ConfigurationPage extends StatelessWidget {
       builder: (context) {
         return MacosScaffold(
           toolBar: ToolBar(
-            title: const Text('Telemetry'),
+            title: const Text('Configure'),
             actions: [
               ToolBarIconButton(
                 label: 'Toggle Sidebar',
@@ -37,7 +37,7 @@ class ConfigurationPage extends StatelessWidget {
 }
 
 class Slider extends StatefulWidget {
-  const Slider({Key? key}) : super(key: key);
+  const Slider({super.key});
 
   @override
   State<Slider> createState() => _SliderState();
